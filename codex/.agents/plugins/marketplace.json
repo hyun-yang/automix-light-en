@@ -1,0 +1,20 @@
+{
+  "name": "automix-light-en",
+  "interface": {
+    "displayName": "Automix Light (English)"
+  },
+  "plugins": [
+    {
+      "name": "aml",
+      "source": {
+        "source": "local",
+        "path": "./aml"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

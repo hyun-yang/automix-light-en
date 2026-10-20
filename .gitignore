@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+
+# Editor
+.idea/
+
+# Secret keys — must never get into the repository
+.env
+.env.*
+!.env.example
+
+# Tool indexes
+.codegraph/
+
+# Development plan and record documents — kept local only (root only)
+/CLAUDE.md
+/intent.md
+/spec.md
+/task.md
+/progress.md
+/REVIEW.md

@@ -1,0 +1,16 @@
+{
+  "name": "automix-light-en",
+  "owner": {
+    "name": "Hayden"
+  },
+  "description": "A light version of automix — a markdown-first plugin for beginners, English edition. The AI-native SDLC playbook scaled down to one person building alone: plan through an interview, build to the plan, check your own work, and go one more round from what you learned using it.",
+  "plugins": [
+    {
+      "name": "aml",
+      "source": "./aml",
+      "description": "A beginner's round: /aml:new (why → interview → spec.md/task.md) → /aml:go (build + check + independent check → progress.md) → /aml:review (bugs · safety · promises kept) → /aml:next (what you found using it → next round). Also /aml:rule (turn repeated mistakes into rules) · /aml:status (progress and numbers) · /aml:doctor (check). Markdown first — the observation script (observe.py) leaves per-task usage in progress.md (and in Langfuse if you like), and a safety-net hook blocks three things that are hard to undo. All conversation and output is in English.",
+      "version": "0.6.0",
+      "category": "workflow"
+    }
+  ]
+}

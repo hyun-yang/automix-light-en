@@ -1,0 +1,19 @@
+{
+  "name": "aml",
+  "version": "0.6.0",
+  "description": "A light version of automix — an English plan→build→check→record flow for beginners (Copilot CLI edition)",
+  "author": {
+    "name": "Hayden"
+  },
+  "license": "MIT",
+  "keywords": [
+    "automix",
+    "beginner",
+    "spec",
+    "workflow",
+    "english"
+  ],
+  "agents": "agents/",
+  "skills": "skills/",
+  "hooks": "hooks.json"
+}

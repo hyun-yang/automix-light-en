@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "hooks": {
+    "preToolUse": [
+      {
+        "type": "command",
+        "bash": "bash \"${PLUGIN_ROOT}/hooks/aml-guard.sh\"",
+        "timeoutSec": 10
+      }
+    ]
+  }
+}

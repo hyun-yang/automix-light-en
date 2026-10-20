@@ -1,0 +1,32 @@
+{
+  "name": "aml",
+  "version": "0.6.0",
+  "description": "A Claude Code plugin for people building their first app. A light, English version of automix that guides you from planning through questions and answers to building, checking, code review, and improving after use. It keeps the plan and result of each step as markdown documents, and records the model, time taken, token usage, and estimated cost for each task. It provides a separate checking agent (verifier), a hook that blocks risky actions, and a way to turn repeated mistakes into development rules. There are 7 commands: /aml:new, /aml:go, /aml:review, /aml:next, /aml:rule, /aml:status, /aml:doctor. The usage-recording script uses only the Python standard library, and sending to Langfuse is optional.",
+  "author": {
+    "name": "Hayden",
+    "email": "iamyhs@gmail.com"
+  },
+  "license": "MIT",
+  "keywords": [
+    "automix",
+    "light",
+    "beginner",
+    "spec",
+    "interview",
+    "sdlc",
+    "english"
+  ],
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash|Edit|Write|NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/hooks/aml-guard.sh"
+          }
+        ]
+      }
+    ]
+  }
+}

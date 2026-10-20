@@ -1,0 +1,16 @@
+{
+  "name": "automix-light-en",
+  "owner": {
+    "name": "Hayden"
+  },
+  "description": "A light version of automix — an English plan→build→check→record flow for beginners (Copilot CLI edition)",
+  "plugins": [
+    {
+      "name": "aml",
+      "source": "./aml",
+      "description": "A beginner's round: /aml:new (interview → spec.md/task.md) → /aml:go (build + check + independent check → progress.md) → /aml:review → /aml:next. Also /aml:rule · /aml:status · /aml:doctor. All conversation and output is in English.",
+      "version": "0.6.0",
+      "category": "workflow"
+    }
+  ]
+}

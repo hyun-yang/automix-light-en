@@ -1,0 +1,34 @@
+{
+  "name": "aml",
+  "version": "0.6.0",
+  "description": "A light version of automix — an English plan→build→check→record flow for beginners (Codex edition)",
+  "author": {
+    "name": "Hayden"
+  },
+  "license": "MIT",
+  "keywords": [
+    "automix",
+    "beginner",
+    "spec",
+    "workflow",
+    "english"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Automix Light",
+    "shortDescription": "Plan, build, check, and record a one-line idea.",
+    "longDescription": "Creates intent.md·spec.md·task.md through an interview ($aml:new), then builds and checks tasks in order and records them in progress.md ($aml:go). Includes review ($aml:review), next round ($aml:next), rule cards ($aml:rule), progress summary ($aml:status), and readiness check ($aml:doctor). All conversation and output is in English.",
+    "developerName": "Hayden",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Plan a new idea with $aml:new.",
+      "Carry on with the remaining tasks using $aml:go.",
+      "Tell me the progress with $aml:status."
+    ]
+  }
+}
