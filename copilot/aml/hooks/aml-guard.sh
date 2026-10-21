@@ -9,7 +9,7 @@
 # Principles:
 #   - Only works in aml projects that have spec.md and task.md. No effect on other repositories.
 #   - When it blocks, it says why and what to do instead.
-#   - Never gets in the way of work no matter what — if there is no python3 or the input is odd, let it through (exit 0).
+#   - Never gets in the way of work no matter what — if there is no working Python or the input is odd, let it through (exit 0).
 #     Copilot blocks the tool if a hook ends with a code other than 0·2 (fail-closed),
 #     so at the very bottom everything other than 0 and 2 is turned into 0.
 #   - To turn it off, guard: "off" in .aml/config.yaml.
@@ -20,8 +20,16 @@
 
 set -o pipefail
 
+PY=()
+for candidate in "python3" "python" "py -3"; do
+  if $candidate -c "import sys" >/dev/null 2>&1; then
+    read -r -a PY <<<"$candidate"
+    break
+  fi
+done
+
 guard() {
-  command -v python3 >/dev/null 2>&1 || return 0
+  (( ${#PY[@]} )) || return 0
 
   local INPUT
   INPUT=$(cat 2>/dev/null || echo "")
@@ -31,8 +39,11 @@ guard() {
   # line 1 = kind (shell / file / blank), line 2 = cwd, line 3 = files to change (tab-separated), everything after = command
   # (commands can have newlines, so the command goes last.)
   local PARSED
-  PARSED=$(printf '%s' "$INPUT" | python3 -c '
+  PARSED=$(printf '%s' "$INPUT" | "${PY[@]}" -c '
 import json, re, sys
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdin.reconfigure(encoding="utf-8")
+    sys.stdout.reconfigure(encoding="utf-8", newline="\n")
 try:
     d = json.load(sys.stdin)
     name = d.get("toolName") or d.get("tool_name") or ""
@@ -164,8 +175,11 @@ MSG
 REASON=$(guard 2>&1 >/dev/null)
 if [[ $? == 2 ]]; then
   printf '%s\n' "$REASON" >&2
-  printf '%s' "$REASON" | python3 -c '
+  printf '%s' "$REASON" | "${PY[@]}" -c '
 import json, sys
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdin.reconfigure(encoding="utf-8")
+    sys.stdout.reconfigure(encoding="utf-8", newline="\n")
 print(json.dumps({"permissionDecision": "deny", "permissionDecisionReason": sys.stdin.read().strip()}, ensure_ascii=False))
 ' 2>/dev/null
   exit 2

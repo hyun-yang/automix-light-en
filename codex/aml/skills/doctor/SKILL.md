@@ -1,6 +1,6 @@
 ---
 name: doctor
-description: Pre-start check — checks the plan files and done criteria, the project guide (AGENTS.md), switch prep, the safety-net notice, and git/python3. Read-only. Use for "check things", "are we ready?", or "$aml:doctor".
+description: Pre-start check — checks the plan files and done criteria, the project guide (AGENTS.md), switch prep, the safety-net notice, and git/Python. Read-only. Use for "check things", "are we ready?", or "$aml:doctor".
 ---
 
 # $aml:doctor — pre-start check
@@ -26,10 +26,10 @@ Check the following in order from the project root and report in plain English. 
    "This version has no AML-specific blocking hook. Codex's permission, sandbox, and approval settings apply depending on your environment, and don't guarantee the same blocking as the Claude edition's AML hook."
    If you haven't actually checked Codex's permission and sandbox settings just now, don't say "it's on" or "you're protected". Add that hard-to-undo things like committing secret keys, force pushes, and hard resets need a person to check them.
 9. Is it a **git** repository (`git rev-parse --is-inside-work-tree`)? — if not: "$aml:new sets up git and sets the default branch to main — with it, mistakes are easy to undo"
-10. Is **python3** available (`command -v python3`)? — if not: "No usage line (model · time · tokens · cost) will be left in progress.md. The work carries on as normal"
+10. Is **Python** working? Try `python3 -c "import sys"`, then `python -c "import sys"`, then `py -3 -c "import sys"`. The first successful command is the one to use for measuring (including `-3` for `py -3`). Checking PATH alone can mistake the Windows Store shortcut for Python. If none works: "No usage line (model · time · tokens · cost) will be left in progress.md. The work carries on as normal"
 11. **Rule cards** — count `.agents/skills/*/SKILL.md` and report it (zero is fine). If there are any, list just the names on one line. If cards exist only in `.claude/skills/`: ⚠️ "Codex doesn't read Claude Code rule cards automatically. If there are rules you want to keep, rewrite them into `.agents/skills/` with $aml:rule."
 12. **Checked after changing settings?** — if the most recent change to AGENTS.md · REVIEW.md · rule cards is later than the last entry in progress.md, ⚠️: "The settings that guide Codex changed and there hasn't been a full check since. Go over the done criteria once more with $aml:go or $aml:review."
-13. **Usage measuring** — run `python3 "<package>/scripts/observe.py" check` and pass on the one line it prints as is (`<package>` is two levels up from this SKILL.md). Not being able to measure doesn't block anything. Say in one line that sending to Langfuse isn't in the first Codex edition.
+13. **Usage measuring** — run `python3 "<package>/scripts/observe.py" check` with the working Python command from step 10 in place of `python3`, and pass on the one line it prints as is (`<package>` is two levels up from this SKILL.md). Not being able to measure doesn't block anything. Say in one line that sending to Langfuse isn't in the first Codex edition.
 
 ## Report format
 

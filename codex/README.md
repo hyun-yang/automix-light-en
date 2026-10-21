@@ -4,7 +4,7 @@ This is aml for Codex. With 7 skills you work in the same order as the Claude Co
 
 ## Install
 
-You need the [Codex CLI](https://developers.openai.com/codex) and Git. To record usage you also need `python3`, but the work carries on without it.
+You need the [Codex CLI](https://developers.openai.com/codex) and Git. To record usage you also need a working Python 3 command (`python3`, `python`, or `py -3`), but the work carries on without it.
 
 ```bash
 git clone https://github.com/hyun-yang/automix-light-en.git
@@ -13,6 +13,8 @@ codex plugin marketplace add "$PWD/codex"
 codex plugin add aml@automix-light-en
 codex plugin list            # check that aml@automix-light-en shows installed, enabled
 ```
+
+On **Windows 11**, run the commands in Windows Terminal (PowerShell), using `"$PWD\codex"` instead of `"$PWD/codex"`. PowerShell expands `$PWD` to a path such as `C:\Users\...\automix-light-en`. If it blocks `codex.ps1`, use `codex.cmd` instead of `codex`. See the [Windows 11 guide](../README.md#install-on-windows-11) for prerequisites and Python troubleshooting.
 
 When you open Codex fresh and type `$aml`, the install is done if 7 skills show up with the plugin name in front, like `aml:new`. You can call a skill by typing it like `$aml:go`, or by asking in words, like "carry on with the remaining tasks". Codex has its own built-in commands such as `/new`·`/status`·`/review`, so use `$` when running aml skills, like `$aml:status`. The marketplace points to the folder you downloaded, so don't delete or move that folder.
 
@@ -69,3 +71,5 @@ bash codex/tests/test-templates.sh   # whether the 5 common templates match acro
 python3 codex/tests/test_observe.py  # measuring and summary numbers
 bash codex/tests/test-package.sh     # package structure (with the codex command, also an isolated install and the skill list)
 ```
+
+These tests are for repository contributors. On Windows, use Git Bash for the bash tests and `PYTHONUTF8=1 python` for the Python test if `python3` opens the Microsoft Store. Some tests assume Linux paths; see the [test notes](../README.md#tests).

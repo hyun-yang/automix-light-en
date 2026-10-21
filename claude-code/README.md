@@ -4,6 +4,8 @@ This is aml for Claude Code. With 7 commands (`/aml:new` · `/aml:go` · `/aml:r
 
 ## Install
 
+On **Ubuntu or macOS**, run these commands in a terminal:
+
 ```bash
 git clone https://github.com/hyun-yang/automix-light-en.git
 cd automix-light-en
@@ -17,6 +19,16 @@ Then type these in Claude Code.
 /plugin install aml@automix-light-en
 ```
 
+On **Windows 11**, install [Git for Windows](https://git-scm.com/download/win) and [Python 3](https://www.python.org/downloads/windows/) first. Open Windows Terminal (PowerShell), then run:
+
+```powershell
+git clone https://github.com/hyun-yang/automix-light-en.git
+cd automix-light-en
+powershell -ExecutionPolicy Bypass -File claude-code\install.ps1
+```
+
+Copy the `/plugin marketplace add C:/Users/.../.claude-marketplaces/automix-light-en` command printed by the installer into Claude Code, then run `/plugin install aml@automix-light-en`. The execution-policy option applies only to this invocation. See the [Windows 11 guide](../README.md#install-on-windows-11) for prerequisite and troubleshooting details.
+
 When the 7 `/aml:` commands show up in `/help`, the install is done.
 
 Install either this English edition or the Korean edition ([automix-light](https://github.com/hyun-yang/automix-light)), not both — they use the same command names (`/aml:go` etc.).
@@ -27,6 +39,8 @@ Install either this English edition or the Korean edition ([automix-light](https
 bash claude-code/tests/e2e-smoke-guard.sh     # blocking risky actions: 6 groups of cases
 bash claude-code/tests/e2e-smoke-observe.sh   # usage records and install result
 ```
+
+These tests are for repository contributors. On Windows, use Git Bash to run them; it is not needed for the normal install. Some tests assume Linux paths, so see the [test notes](../README.md#tests).
 
 ## Moving a project from Codex to Claude Code
 

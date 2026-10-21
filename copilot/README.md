@@ -6,7 +6,7 @@ This is aml for GitHub Copilot CLI (`copilot`, run in the terminal). With 7 skil
 
 ## Install
 
-You need [GitHub Copilot CLI](https://docs.github.com/en/copilot/how-tos/copilot-cli) (a Copilot subscription is required) and Git. To record usage and use the safety-net hook you also need `python3`. Without `python3` the work still carries on, but usage shows as `no record` and the hook's blocking doesn't work.
+You need [GitHub Copilot CLI](https://docs.github.com/en/copilot/how-tos/copilot-cli) (a Copilot subscription is required) and Git. To record usage and use the safety-net hook you also need a working Python 3 command (`python3`, `python`, or `py -3`). Without one the work still carries on, but usage shows as `no record` and the hook's blocking doesn't work.
 
 ```bash
 git clone https://github.com/hyun-yang/automix-light-en.git
@@ -15,6 +15,8 @@ copilot plugin marketplace add "$PWD/copilot"
 copilot plugin install aml@automix-light-en
 copilot plugin list            # check it shows aml@automix-light-en (v0.6.0) (enabled)
 ```
+
+On **Windows 11**, run the commands in Windows Terminal (PowerShell), using `"$PWD\copilot"` instead of `"$PWD/copilot"`. PowerShell expands `$PWD` to a path such as `C:\Users\...\automix-light-en`. The safety-net hook skips a `python3` Microsoft Store shortcut and looks for a working `python` or `py -3`. See the [Windows 11 guide](../README.md#install-on-windows-11) for prerequisites.
 
 **Register the `copilot/` folder.** Copilot also reads Claude Code's marketplace file, so if you register the `claude-code/` folder by mistake, the Claude Code edition gets installed instead of the Copilot CLI edition. The marketplace reads the downloaded folder directly, so don't delete or move that folder.
 
@@ -75,3 +77,5 @@ bash copilot/tests/test-guard.sh       # the safety-net hook's block/allow behav
 python3 copilot/tests/test_observe.py  # measuring and summary numbers
 bash copilot/tests/test-package.sh     # package structure (with the copilot command, also an isolated install and the skill list)
 ```
+
+These tests are for repository contributors. On Windows, use Git Bash for the bash tests and `PYTHONUTF8=1 python` for the Python test if `python3` opens the Microsoft Store. Some tests assume Linux paths; see the [test notes](../README.md#tests).

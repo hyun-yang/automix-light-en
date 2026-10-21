@@ -15,6 +15,8 @@ Before starting, check whether `.aml/FIXING` is left over. If it is, a bug fix w
 
 The person you are working with is a beginner. Write all reports and records in **English**, in words someone who doesn't know programming understands.
 
+Before any `observe.py` call, find a working Python: try `python3 -c "import sys"`, then `python -c "import sys"`, then `py -3 -c "import sys"`. Use the first command that succeeds for every `observe.py` call below. Replace the leading `python3` in the examples with that command, including `-3` when using `py -3`. A command merely existing on PATH is not enough.
+
 ## Task loop
 
 Go through the unchecked tasks in task.md in order:
@@ -27,7 +29,7 @@ Go through the unchecked tasks in task.md in order:
 
    `python3 "<package>/scripts/observe.py" task-start --label "<task number and name>"`
 
-   Remember the printed `Start: <time>` (you use it as `--since` in step 4). If there's no python3 or it fails, just note the time with `date -Is` and carry on. Build using the "Decisions" and references (mockups, screenshots) in spec.md and the rule cards as your map.
+   Remember the printed `Start: <time>` (you use it as `--since` in step 4). If no Python command works or the call fails, just note the time with `date -Is` and carry on. Build using the "Decisions" and references (mockups, screenshots) in spec.md and the rule cards as your map.
    - **If the task is fixing a bug, write a failing test first.** Write a test that reproduces the problem, confirm it really fails, create the `.aml/FIXING` file (`mkdir -p .aml && touch .aml/FIXING`), then fix **only the code** until it passes. Once it passes, `rm .aml/FIXING`. Don't change test files while fixing — that wouldn't make the bug go away, it would make the check go away. **The Codex edition has no AML hook that blocks this automatically.** Keep to it yourself, and if something forces you to change a test file, stop and ask the user.
    - **If the task has a screen, match it by eye.** Build → run it or take a screenshot → compare with the references (the chosen mockup) in spec.md → refine. If you have no tool to see the screen, write "Screen check: not done" and tell the user how to look at it themselves.
    - **If the build drifts from the plan, fix task.md on the spot.** Update the Files / Risk / Proof lines to match reality and add a word on why they changed. Never leave the plan and reality out of step.
@@ -38,7 +40,7 @@ Go through the unchecked tasks in task.md in order:
 
    `python3 "<package>/scripts/observe.py" task-done --since <start time> --label "<task number and name>" --feature "<spec.md title>" --note "<one-line check result>"`
 
-   Paste the printed "Usage: …" line as is — leave it exactly in the format the script produced. If usage can't be read reliably, the script prints `Usage: no record (…)`; paste that as is too and carry on. If the call itself fails (no python3, etc.), write `Usage: no record` and carry on. **Never stop the work because of measuring.** For the detailed rules, see the [measuring guide](../../references/telemetry.md).
+   Paste the printed "Usage: …" line as is — leave it exactly in the format the script produced. If usage can't be read reliably, the script prints `Usage: no record (…)`; paste that as is too and carry on. If the call itself fails (no working Python, etc.), write `Usage: no record` and carry on. **Never stop the work because of measuring.** For the detailed rules, see the [measuring guide](../../references/telemetry.md).
 
 5. **Commit** — if it's a git repository, commit each time a task is done (e.g. `feat: 1.2 add-card dialog`). That way you can undo in these units. If it isn't a git repository, quietly skip this.
 

@@ -1,6 +1,6 @@
 # aml — Codex edition package
 
-A plugin that helps beginners go from planning through building, checking, and recording, in English. How to install it and how it differs from the Claude Code edition are in the repository's `codex/README.md`.
+A plugin that helps beginners go from planning through building, checking, and recording, in English. For Windows 11 and other installation steps, see the repository's `codex/README.md`.
 
 ## Skills
 

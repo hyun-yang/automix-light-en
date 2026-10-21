@@ -9,14 +9,21 @@
 # Principles:
 #   - Only works in aml projects that have spec.md and task.md. No effect on other repositories.
 #   - When it blocks, it says why and what to do instead.
-#   - Never gets in the way of work no matter what — if there is no python3 or the input is odd, let it through (exit 0).
+#   - Never gets in the way of work no matter what — if there is no working Python or the input is odd, let it through (exit 0).
 #   - To turn it off, guard: "off" in .aml/config.yaml.
 #
 # Exit codes: 0 = pass, 2 = block (the message goes to Claude through stderr).
 
 set -uo pipefail
 
-command -v python3 >/dev/null 2>&1 || exit 0
+PY=()
+for candidate in "python3" "python" "py -3"; do
+  if $candidate -c "import sys" >/dev/null 2>&1; then
+    read -r -a PY <<<"$candidate"
+    break
+  fi
+done
+(( ${#PY[@]} )) || exit 0
 
 INPUT=$(cat 2>/dev/null || echo "")
 [[ -z "$INPUT" ]] && exit 0
@@ -24,8 +31,11 @@ INPUT=$(cat 2>/dev/null || echo "")
 # Pull out four things with one python call.
 # line 1 = tool_name, line 2 = cwd, line 3 = file_path, everything after = command
 # (tool names and paths have no newlines, but commands can, so the command goes last.)
-PARSED=$(printf '%s' "$INPUT" | python3 -c '
+PARSED=$(printf '%s' "$INPUT" | "${PY[@]}" -c '
 import json, sys
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdin.reconfigure(encoding="utf-8")
+    sys.stdout.reconfigure(encoding="utf-8", newline="\n")
 try:
     d = json.load(sys.stdin)
     inp = d.get("tool_input") or {}

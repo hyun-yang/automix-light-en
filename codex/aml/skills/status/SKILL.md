@@ -18,7 +18,7 @@ Report (in English, in plain words):
 
 Add one line explaining what each number means. Don't just throw numbers at a beginner.
 
-First, add up the usage lines (`<package>` is two levels up from this SKILL.md. Skip only this step if there is no python3):
+First, add up the usage lines (`<package>` is two levels up from this SKILL.md). Try `python3 -c "import sys"`, then `python -c "import sys"`, then `py -3 -c "import sys"`. Run `observe.py` with the first command that succeeds (including `-3` for `py -3`), replacing `python3` below. Skip only this step if none works; finding a command on PATH alone is not enough.
 
 ```bash
 python3 "<package>/scripts/observe.py" summary progress.md

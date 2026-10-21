@@ -24,7 +24,7 @@ The design draws on the principles of "A Field Guide to Fable": keep prompts sho
 
 ## Install
 
-Run the install script from the folder where you downloaded the repository.
+On Ubuntu or macOS, run the install script from the folder where you downloaded the repository.
 
 ```bash
 cd automix-light-en
@@ -37,6 +37,14 @@ Then type these in Claude Code.
 /plugin marketplace add ~/.claude-marketplaces/automix-light-en
 /plugin install aml@automix-light-en
 ```
+
+On Windows 11, use Windows Terminal (PowerShell) from the repository root:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File claude-code\install.ps1
+```
+
+Copy the `/plugin marketplace add C:/Users/.../.claude-marketplaces/automix-light-en` command printed by the installer into Claude Code, then run `/plugin install aml@automix-light-en`. The [Windows 11 guide](../../README.md#install-on-windows-11) covers the prerequisites and download steps.
 
 When the 7 commands below, such as `/aml:new` and `/aml:go`, show up in `/help`, the install is done.
 

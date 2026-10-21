@@ -8,6 +8,8 @@ Usage: gpt-6-astra · 4m 12s · tokens in 12.3k / out 2.1k (cache read 85.0k) ·
 
 ## How to call it
 
+Try `python3 -c "import sys"`, then `python -c "import sys"`, then `py -3 -c "import sys"`. Replace `python3` in the examples with the first command that succeeds, including `-3` if using `py -3`. A Windows Store shortcut can exist on PATH without working.
+
 ```bash
 python3 "<package>/scripts/observe.py" task-start --label "1.2 add-card dialog"
 #  → Start: 2026-10-17T06:00:00+10:00      (use this time as --since below)

@@ -21,18 +21,63 @@ Command definitions, templates, and work results are all markdown files. The onl
 
 ## Which tool do you use?
 
-The same workflow works in all three tools. Follow the install guide for the tool you use.
+The same workflow works in all three tools. Follow the instructions for your operating system below, then see the README for your tool for more detail.
 
-| Tool | Install and guide | Install commands (from the repo root) |
-|---|---|---|
-| Claude Code | [`claude-code/README.md`](claude-code/README.md) | `bash claude-code/install.sh` |
-| Codex | [`codex/README.md`](codex/README.md) | `codex plugin marketplace add "$PWD/codex"` → `codex plugin add aml@automix-light-en` |
-| GitHub Copilot CLI | [`copilot/README.md`](copilot/README.md) | `copilot plugin marketplace add "$PWD/copilot"` → `copilot plugin install aml@automix-light-en` |
+| Tool | Install guide |
+|---|---|
+| Claude Code | [`claude-code/README.md`](claude-code/README.md) |
+| Codex | [`codex/README.md`](codex/README.md) |
+| GitHub Copilot CLI | [`copilot/README.md`](copilot/README.md) |
+
+## Install on Windows 11
+
+Enter these commands in **Windows Terminal (PowerShell)**. You do not need to open Git Bash to install the plugin.
+
+**1. Install the prerequisites.**
+
+- [Git for Windows](https://git-scm.com/download/win) provides `git clone` and the `bash` used internally by the Claude Code and Copilot safety-net hooks. Keep the default installer settings.
+- [Python 3](https://www.python.org/downloads/windows/) is needed for usage records and the safety-net hooks. Select **"Add python.exe to PATH"** during installation. The plugins can install without Python, but those features will not work.
+
+**2. Open Windows Terminal** from the Start menu and select a PowerShell tab. If you just installed the prerequisites, open a new terminal so it can find `git` and `python`.
+
+**3. Download the repository.**
+
+```powershell
+git clone https://github.com/hyun-yang/automix-light-en.git
+cd automix-light-en
+```
+
+**4. Run the commands for your tool.**
+
+| Tool | Run in PowerShell |
+|---|---|
+| Claude Code | `powershell -ExecutionPolicy Bypass -File claude-code\install.ps1` → copy the printed `/plugin marketplace add C:/Users/.../.claude-marketplaces/automix-light-en` command into Claude Code, then run `/plugin install aml@automix-light-en` |
+| Codex | `codex plugin marketplace add "$PWD\codex"` → `codex plugin add aml@automix-light-en` |
+| GitHub Copilot CLI | `copilot plugin marketplace add "$PWD\copilot"` → `copilot plugin install aml@automix-light-en` |
+
+In PowerShell, `$PWD` is the current folder, such as `C:\Users\...\automix-light-en`.
+
+**If a command is blocked:**
+
+- The Claude Code command uses `-ExecutionPolicy Bypass` for that invocation only. It does not change your computer's execution policy. Run the command as shown instead of launching `install.ps1` directly.
+- If PowerShell blocks `codex.ps1`, use `codex.cmd` in place of `codex` (for example, `codex.cmd plugin marketplace add "$PWD\codex"`).
+- Windows may provide a Microsoft Store shortcut named `python3` that is not a working Python installation. The install scripts, hooks, and aml command instructions test `python3`, then `python`, then `py -3`, and use the first one that works. Use `python` when entering Python commands yourself if `python3` opens the Store.
+- Keep Git for Windows installed: the Claude Code and Copilot hooks use its `bash` internally.
+
+## Install on Ubuntu or macOS
+
+Run these commands in a terminal. Git is required; `python3` is also needed for usage records and the safety-net hooks.
 
 ```bash
 git clone https://github.com/hyun-yang/automix-light-en.git
 cd automix-light-en
 ```
+
+| Tool | Run in the terminal |
+|---|---|
+| Claude Code | `bash claude-code/install.sh` → enter the printed `/plugin marketplace add ...` command in Claude Code, then `/plugin install aml@automix-light-en` |
+| Codex | `codex plugin marketplace add "$PWD/codex"` → `codex plugin add aml@automix-light-en` |
+| GitHub Copilot CLI | `copilot plugin marketplace add "$PWD/copilot"` → `copilot plugin install aml@automix-light-en` |
 
 **Install either this English edition or the Korean edition, not both, in the same tool.** They use the same command names (`/aml:go`, `$aml:go`), so it would be hard to tell which one runs.
 
@@ -65,7 +110,8 @@ README.md                           this document — pick a tool
 claude-code/                        Claude Code edition
   .claude-plugin/marketplace.json   marketplace settings
   aml/                              plugin (commands · agents · hooks · scripts · templates · references)
-  install.sh                        marketplace install script
+  install.sh                        marketplace install script (Ubuntu and macOS)
+  install.ps1                       marketplace install script (Windows PowerShell)
   tests/                            basic behavior tests
 codex/                              Codex edition
   .agents/plugins/marketplace.json  marketplace settings
@@ -92,6 +138,8 @@ bash copilot/tests/test-guard.sh              # Copilot edition blocking of risk
 python3 copilot/tests/test_observe.py         # Copilot measuring and summary numbers
 bash copilot/tests/test-package.sh            # Copilot package structure (with the copilot command, also an isolated install)
 ```
+
+These tests are written for Ubuntu. On Windows, run the bash tests in Git Bash; some assume Linux paths or call `python3` internally and may fail there. In Git Bash, use `PYTHONUTF8=1 python` for a Python test if `python3` opens the Microsoft Store (for example, `PYTHONUTF8=1 python codex/tests/test_observe.py`). Run tests that require Linux paths in Ubuntu or WSL.
 
 ## More
 

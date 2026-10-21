@@ -11,6 +11,8 @@ Before starting, check whether `.aml/FIXING` is left over. If it is, a bug fix w
 
 The person you are working with is a beginner. Write all reports and records in **English**, in words someone who doesn't know programming understands.
 
+Before any `observe.py` call, find a working Python: try `python3 -c "import sys"`, then `python -c "import sys"`, then `py -3 -c "import sys"`. Use the first command that succeeds for every `observe.py` call below. Replace the leading `python3` in the example with that command, including `-3` when using `py -3`. A command merely existing on PATH is not enough.
+
 ## Task loop
 
 Go through the unchecked tasks in task.md in order:
@@ -30,7 +32,7 @@ Go through the unchecked tasks in task.md in order:
 
    `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/observe.py" task-done --since <start time> --label "<task number and name>" --feature "<spec.md title>" --note "<one-line check result>"`
 
-   Paste the printed "Usage: …" line as is — leave it exactly in the format the script produced (if Langfuse is turned on, the same call also sends it — ignore send failures and carry on). If the call itself fails (no python3, etc.), write `Usage: no record` and carry on.
+   Paste the printed "Usage: …" line as is — leave it exactly in the format the script produced (if Langfuse is turned on, the same call also sends it — ignore send failures and carry on). If the call itself fails (no working Python, etc.), write `Usage: no record` and carry on.
 
 5. **Commit** — if it's a git repository, commit each time a task is done (e.g. `feat: 1.2 add-card dialog`). That way you can undo in these units. If it isn't a git repository, quietly skip this.
 
