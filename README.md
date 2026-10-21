@@ -2,7 +2,7 @@
 
 > A Claude Code · Codex · Copilot CLI plugin for people building their first app. A light, English version of automix that guides you from planning through building, checking, and improving after use.
 >
-> The Korean edition lives at [hyun-yang/automix-light](https://github.com/hyun-yang/automix-light).
+> The Korean version is available at [hyun-yang/automix-light](https://github.com/hyun-yang/automix-light).
 
 Based on Anthropic's [AI-Native SDLC playbook](https://claude.com/blog/the-ai-native-sdlc-playbook), **with the development process simplified so someone building an app alone can follow it.** The core idea is to write down the result of each step as a document, and to work from that document in the next step.
 
