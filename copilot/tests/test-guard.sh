@@ -126,9 +126,10 @@ check "E6 unknown tool passes"       0 "{\"cwd\": \"$TMP\", \"toolName\": \"web_
 check "E7 toolArgs is a JSON string" 2 "{\"cwd\": \"$TMP\", \"toolName\": \"bash\", \"toolArgs\": \"{\\\"command\\\": \\\"git reset --hard\\\"}\"}"
 check "E8 toolArgs is missing"       0 "{\"cwd\": \"$TMP\", \"toolName\": \"bash\"}"
 check "E9 cwd doesn't exist"         0 '{"cwd": "/no/such/folder", "toolName": "bash", "toolArgs": {"command": "git reset --hard"}}'
-# No python3 means pass (take only python3 out of PATH, keep bash)
-NOPY="$(mktemp -d)"; ln -s "$(command -v bash)" "$NOPY/bash"
-out=$(printf '{"cwd": "%s", "toolName": "bash", "toolArgs": {"command": "git reset --hard"}}' "$TMP" | PATH="$NOPY" "$NOPY/bash" "$GUARD" 2>&1); code=$?
+# Failed Python candidates must pass; keep the real Bash executable usable.
+NOPY="$(mktemp -d)"
+for p in python3 python py; do printf '#!/bin/sh\nexit 127\n' > "$NOPY/$p"; chmod +x "$NOPY/$p"; done
+out=$(printf '{"cwd": "%s", "toolName": "bash", "toolArgs": {"command": "git reset --hard"}}' "$TMP" | PATH="$NOPY:$PATH" bash "$GUARD" 2>&1); code=$?
 rm -rf "$NOPY"
 [[ "$code" == "0" ]] || { echo "FAIL: E10 must pass when there is no python3 (exit code $code)" >&2; exit 1; }
 echo "OK: E passed (turning off + ends only with 0·2)"
@@ -145,6 +146,7 @@ entries = hj.get("hooks", {}).get("preToolUse", [])
 assert entries, "hooks.json has no preToolUse hook"
 cmd = entries[0].get("bash", "")
 assert "${PLUGIN_ROOT}/hooks/aml-guard.sh" in cmd, "hook command must point to ${PLUGIN_ROOT}/hooks/aml-guard.sh: %r" % cmd
+assert "$env:PLUGIN_ROOT/hooks/aml-guard.ps1" in entries[0].get("powershell", ""), "Windows PowerShell hook missing"
 assert 0 < entries[0].get("timeoutSec", 30) <= 30, "timeoutSec looks wrong"
 PY
 [[ $? == 0 ]] || exit 1
