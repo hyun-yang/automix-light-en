@@ -16,6 +16,41 @@ codex plugin list            # check that aml@automix-light-en shows installed, 
 
 On **Windows 11**, run the commands in Windows Terminal (PowerShell), using `"$PWD\codex"` instead of `"$PWD/codex"`. PowerShell expands `$PWD` to a path such as `C:\Users\...\automix-light-en`. If it blocks `codex.ps1`, use `codex.cmd` instead of `codex`. See the [Windows 11 guide](../README.md#install-on-windows-11) for prerequisites and Python troubleshooting.
 
+### Codex execution-policy errors on Windows
+
+If an install command reports the following error, PowerShell is blocking `codex.ps1`:
+
+```text
+codex.ps1 cannot be loaded because running scripts is disabled on this system.
+PSSecurityException / UnauthorizedAccess
+```
+
+Run this command in PowerShell. If a confirmation prompt appears, read it and enter `Y` to continue.
+
+```powershell
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+```
+
+`CurrentUser` is a **persistent setting for your current Windows user**; administrator privileges are normally not required. `RemoteSigned` allows local scripts and requires a trusted signature for scripts downloaded from the internet. A company or school Group Policy can override this setting. See [Microsoft's execution-policy documentation](https://learn.microsoft.com/powershell/module/microsoft.powershell.security/set-executionpolicy?view=powershell-5.1).
+
+Then retry the install commands from the `automix-light-en` folder. In the list, check that `aml@automix-light-en` is `installed` and `enabled`.
+
+```powershell
+codex plugin marketplace add "$PWD\codex"
+codex plugin add aml@automix-light-en
+codex plugin list
+```
+
+If you prefer not to change the execution policy, use `codex.cmd` instead:
+
+```powershell
+codex.cmd plugin marketplace add "$PWD\codex"
+codex.cmd plugin add aml@automix-light-en
+codex.cmd plugin list
+```
+
+### Usage and installation checks
+
 When you open Codex fresh and type `$aml`, the install is done if 7 skills show up with the plugin name in front, like `aml:new`. You can call a skill by typing it like `$aml:go`, or by asking in words, like "carry on with the remaining tasks". Codex has its own built-in commands such as `/new`·`/status`·`/review`, so use `$` when running aml skills, like `$aml:status`. The marketplace points to the folder you downloaded, so don't delete or move that folder.
 
 ### If the Korean edition is installed

@@ -18,6 +18,19 @@ copilot plugin list            # check it shows aml@automix-light-en (v0.6.0) (e
 
 On **Windows 11**, run the commands in Windows Terminal (PowerShell), using `"$PWD\copilot"` instead of `"$PWD/copilot"`. PowerShell expands `$PWD` to a path such as `C:\Users\...\automix-light-en`. The safety-net hook skips a `python3` Microsoft Store shortcut and looks for a working `python` or `py -3`. See the [Windows 11 guide](../README.md#install-on-windows-11) for prerequisites.
 
+The Windows safety-net hook runs Python 3 from Windows PowerShell 5.1 or PowerShell 7. **It does not require Bash to be installed or added to PATH.** Linux/macOS keep the Bash entry point; both entry points use the same Python decisions. Under the existing policy, a missing Python installation or unreadable input allows the tool call, so blocking is not active in those cases.
+
+If `hook errored` is accompanied by `spawn bash ENOENT` in the log, an older Bash-only configuration may still be loaded. Check `copilot plugin list`: if the Live Plugin points to this updated `copilot/` folder, fully quit and restart Copilot. If the plugin is a copied install or points elsewhere, check the marketplace path and reinstall:
+
+```powershell
+copilot plugin uninstall aml@automix-light-en
+copilot plugin install aml@automix-light-en
+```
+
+In the new session, check the AML hook in `/env` and run `/aml:doctor`. A hook appearing in `/env` does not by itself prove it runs successfully. Source edits do not immediately update an existing session or a copied install. If PowerShell blocks npm's `copilot.ps1`, use `copilot.cmd` instead of `copilot`; no computer-wide execution-policy change is required.
+
+For Windows contributor checks, run `python copilot/tests/test_guard_windows.py`. The test passes risky command strings to the hook without executing them. If PowerShell 7 is not installed, that check is skipped and must not be reported as verified.
+
 **Register the `copilot/` folder.** Copilot also reads Claude Code's marketplace file, so if you register the `claude-code/` folder by mistake, the Claude Code edition gets installed instead of the Copilot CLI edition. The marketplace reads the downloaded folder directly, so don't delete or move that folder.
 
 When you open Copilot fresh and type `/aml`, the install is done if 7 skills show up with the plugin name in front, like `/aml:go`. You can call a skill by typing it like `/aml:go`, or by asking in words, like "carry on with the remaining tasks". Copilot has its own built-in commands such as `/new` (new conversation) and `/review` (code review), so always call aml skills with `aml:`, like `/aml:new`.

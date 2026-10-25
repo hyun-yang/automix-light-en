@@ -51,7 +51,7 @@ PY
   if grep -rnE 'no AML-specific blocking hook|~/\.codex|codex-measure' "$pkg" >&2; then
     fail "A Codex-edition-only phrases are left"
   fi
-  for f in hooks.json hooks/aml-guard.sh agents/verifier.agent.md scripts/observe.py \
+  for f in hooks.json hooks/aml-guard.sh hooks/aml-guard.ps1 hooks/aml-guard.py agents/verifier.agent.md scripts/observe.py \
            templates/agents.template.md templates/skill.template.md \
            references/switching.md references/verification.md references/telemetry.md references/artifact-chain.md; do
     [ -f "$pkg/$f" ] || fail "C resource missing: $f"
@@ -111,7 +111,7 @@ sys.exit(0 if ok else 1)' || fail "D no enabled aml@automix-light-en in the inst
   mkdir -p "$TMP/empty"
   (cd "$TMP/empty" && copilot skill list --json 2>/dev/null) | python3 -c '
 import json, sys
-names = sorted(s["name"] for s in json.load(sys.stdin) if s.get("source") == "plugin" and "/aml/skills/" in s.get("path", ""))
+names = sorted(s["name"] for s in json.load(sys.stdin) if s.get("source") == "plugin" and "/aml/skills/" in s.get("path", "").replace(chr(92), "/"))
 want = sorted("new go review next rule status doctor".split())
 if names != want:
     print("FAIL: D the skill list differs: %s" % names, file=sys.stderr); sys.exit(1)' || exit 1

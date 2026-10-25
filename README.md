@@ -17,7 +17,7 @@ You shape the idea, plan the build, build the app, and check it. Problems and wa
 | Code review | Bugs, security problems, whether requirements are met |
 | Improving after use | Small fixes go into `task.md`; new features or changes of direction go into `intent.md` |
 
-Command definitions, templates, and work results are all markdown files. The only running code is the usage-recording script (`observe.py`, Python standard library only) and the blocking hook of the Claude Code and Copilot CLI editions (`aml-guard.sh`).
+Command definitions, templates, and work results are all markdown files. The only running code is the usage-recording script (`observe.py`, Python standard library only) and the blocking hook of the Claude Code and Copilot CLI editions (`aml-guard.sh`, plus the Copilot edition's `aml-guard.ps1` and shared `aml-guard.py`).
 
 ## Which tool do you use?
 
@@ -35,7 +35,7 @@ Enter these commands in **Windows Terminal (PowerShell)**. You do not need to op
 
 **1. Install the prerequisites.**
 
-- [Git for Windows](https://git-scm.com/download/win) provides `git clone` and the `bash` used internally by the Claude Code and Copilot safety-net hooks. Keep the default installer settings.
+- [Git for Windows](https://git-scm.com/download/win) provides `git clone` and the `bash` used internally by the Claude Code safety-net hook. The Copilot Windows hook uses PowerShell and Python instead. Keep the default installer settings.
 - [Python 3](https://www.python.org/downloads/windows/) is needed for usage records and the safety-net hooks. Select **"Add python.exe to PATH"** during installation. The plugins can install without Python, but those features will not work.
 
 **2. Open Windows Terminal** from the Start menu and select a PowerShell tab. If you just installed the prerequisites, open a new terminal so it can find `git` and `python`.
@@ -60,9 +60,42 @@ In PowerShell, `$PWD` is the current folder, such as `C:\Users\...\automix-light
 **If a command is blocked:**
 
 - The Claude Code command uses `-ExecutionPolicy Bypass` for that invocation only. It does not change your computer's execution policy. Run the command as shown instead of launching `install.ps1` directly.
-- If PowerShell blocks `codex.ps1`, use `codex.cmd` in place of `codex` (for example, `codex.cmd plugin marketplace add "$PWD\codex"`).
+- If PowerShell blocks `codex.ps1`, follow [the execution-policy steps below](#codex-execution-policy-errors-on-windows), then retry the install. You can also use `codex.cmd` instead of `codex` without changing the policy.
 - Windows may provide a Microsoft Store shortcut named `python3` that is not a working Python installation. The install scripts, hooks, and aml command instructions test `python3`, then `python`, then `py -3`, and use the first one that works. Use `python` when entering Python commands yourself if `python3` opens the Store.
-- Keep Git for Windows installed: the Claude Code and Copilot hooks use its `bash` internally.
+- Keep Git for Windows installed: the Claude Code hook uses its `bash` internally. The Copilot Windows hook uses PowerShell and Python, so it does not require Bash on PATH. Git is still needed for repository work.
+
+### Codex execution-policy errors on Windows
+
+If an install command reports the following error, PowerShell is blocking `codex.ps1`:
+
+```text
+codex.ps1 cannot be loaded because running scripts is disabled on this system.
+PSSecurityException / UnauthorizedAccess
+```
+
+Run this command in PowerShell. If a confirmation prompt appears, read it and enter `Y` to continue.
+
+```powershell
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+```
+
+`CurrentUser` is a **persistent setting for your current Windows user**; administrator privileges are normally not required. `RemoteSigned` allows local scripts and requires a trusted signature for scripts downloaded from the internet. A company or school Group Policy can override this setting. See [Microsoft's execution-policy documentation](https://learn.microsoft.com/powershell/module/microsoft.powershell.security/set-executionpolicy?view=powershell-5.1).
+
+Then retry the install commands from the `automix-light-en` folder. In the list, check that `aml@automix-light-en` is `installed` and `enabled`.
+
+```powershell
+codex plugin marketplace add "$PWD\codex"
+codex plugin add aml@automix-light-en
+codex plugin list
+```
+
+If you prefer not to change the execution policy, use `codex.cmd` instead:
+
+```powershell
+codex.cmd plugin marketplace add "$PWD\codex"
+codex.cmd plugin add aml@automix-light-en
+codex.cmd plugin list
+```
 
 ## Install on Ubuntu or macOS
 
