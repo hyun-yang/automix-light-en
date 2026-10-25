@@ -95,6 +95,28 @@ cd automix-light-en
 
 The plan and record files (`intent.md`·`spec.md`·`task.md`·`progress.md`·`REVIEW.md`) have the same format in all three tools, so you can move a project in progress to another tool and carry on. Only the project guide file (`CLAUDE.md` ↔ `AGENTS.md`) and the rule card location (`.claude/skills/` ↔ `.agents/skills/`) differ, and Codex and Copilot CLI both use `AGENTS.md` and `.agents/skills/`. The switching steps are in each folder's README. Use one tool at a time.
 
+## Commands and the software development life cycle (SDLC)
+
+The software development life cycle (SDLC) covers planning an idea, building it, checking it, and improving it through use. AML commands support these stages and leave the following results.
+
+The commands below use Codex syntax. In Claude Code and Copilot CLI, use `/aml:` instead of `$aml:` (for example, `/aml:new`).
+
+| SDLC phase | AML command | Output | What it holds |
+|---|---|---|---|
+| Planning | `$aml:new` | `intent.md` | Why you are building it and your original request, in your own words |
+| Requirements | `$aml:new` | `spec.md` | Features, decisions, references, concerns, and done criteria |
+| Design / Task planning | `$aml:new` | `task.md`, mockups when needed, project guide file | Work order with Files / Risk / Proof; project guidance and rules |
+| Implementation | `$aml:go` | Code, per-task commits, `progress.md` | Tasks built in order, with notes on what changed and why |
+| Testing / Verification | `$aml:go` | Checked done criteria in `spec.md`, check results in `progress.md` | Checks by actually running things, including notes on anything that could not be checked |
+| Review | `$aml:go`, `$aml:review` | Review results in `progress.md`, using `REVIEW.md` as the checklist | Bugs, safety, and promises kept |
+| Maintenance / Next iteration | `$aml:next`, `$aml:rule` | Next tasks or a new `intent.md` entry; rules in the project guide or rule cards | Feedback from use and rules that prevent repeated mistakes |
+| Readiness check (across stages) | `$aml:doctor` | Readiness results shown in the conversation | Checks plan and guide files, available tools, and other prerequisites without changing files |
+| Progress check (across stages) | `$aml:status` | Progress summary shown in the conversation | Available progress, done-criteria, time, token, and cost information without changing files |
+
+The project guide file is `CLAUDE.md` for Claude Code and `AGENTS.md` for Codex and Copilot CLI. Planning creates the guide if it is missing and leaves an existing guide intact. Mockups are created when needed.
+
+Claude Code uses a separate checking agent (`verifier`). Codex uses a self-check by default and records an independent check only when the work was actually checked by a separate agent. Copilot CLI also records an independent check only when `verifier` was actually called. See [Differences between editions](#differences-between-editions) below for details.
+
 ## Differences between editions
 
 | | Claude Code edition | Codex edition | Copilot CLI edition |
