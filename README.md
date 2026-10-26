@@ -150,6 +150,46 @@ The project guide file is `CLAUDE.md` for Claude Code and `AGENTS.md` for Codex 
 
 Claude Code uses a separate checking agent (`verifier`). Codex uses a self-check by default and records an independent check only when the work was actually checked by a separate agent. Copilot CLI also records an independent check only when `verifier` was actually called. See [Differences between editions](#differences-between-editions) below for details.
 
+## Good planning starts with finding the missing questions
+
+Asking “What would you like to build?” once does not reveal every requirement. **AML organizes clear requirements, makes hard-to-express criteria concrete, and helps you find answers you do not yet know and things you have not thought of.**
+
+The example below shows how this works when planning a small to-do app.
+
+| Area of thought | What you might think | How AML helps | What goes into the plan |
+|---|---|---|---|
+| **✓ KK — I can clearly say what I want**<br>Known Knowns | “I want to write down tasks and mark them as done.” | Records clear requirements without asking you to repeat them | **Required features** |
+| **◉ UK — It is hard to explain, but I know it when I see it**<br>Unknown Knowns | “Of course it should be easy to use… I like this screen.” | Checks criteria you took for granted and left unsaid; if they are hard to describe, compares 3–4 different screen mockups | **Chosen screen and criteria** |
+| **? KU — I know what I do not know, but I do not have an answer yet**<br>Known Unknowns | “I do not know how to save the tasks.” | Asks one question at a time with plain choices, such as “Will you use this only on this device, or on other devices too?” | **Choices and reasons** |
+| **✦ UU — I do not yet know what I have missed**<br>Unknown Unknowns | “I had not thought about what happens after closing the app.” | Shows what people usually decide for this kind of app and helps uncover missing questions | **New questions to answer** |
+
+### From why to build it to how to build it
+
+```mermaid
+flowchart TD
+    KK["✓ KK<br/>I can clearly say<br/>what I want"] --> RECORD["Record the requirements"]
+    UK["◉ UK<br/>Hard to explain,<br/>but I know it when I see it"] --> COMPARE["Compare mockups to discover<br/>preferences and criteria"]
+    KU["? KU<br/>I know what I do not know,<br/>but have no answer yet"] --> OPTIONS["Consider choices one at a time;<br/>ask for a recommendation if unsure"]
+    UU["✦ UU<br/>I do not yet know<br/>what I have missed"] --> DISCOVER["Look at common decisions<br/>to uncover missing questions"]
+    DISCOVER --> KU
+    COMPARE --> CHOICE["Record choices and reasons"]
+    OPTIONS --> CHOICE
+    RECORD --> PLAN["Record required features,<br/>choices, and done criteria"]
+    CHOICE --> PLAN
+    PLAN --> BUILD["Build"]
+    BUILD --> CHECK["Run it and check<br/>that it works as agreed"]
+```
+
+> **If something is hard to explain, compare examples. If you do not know the answer, ask for a recommendation.**<br>
+> “I am not sure — please recommend an option” is a valid answer. AML explains its recommendation and the reason for it.<br>
+> UK brings out preferences and criteria you already have; KU helps you decide on an answer you do not yet have.
+
+**Discover → Choose → Check**
+
+`UU: I had not thought about reopening the app` → `KU: Should the list be saved?` → `Decision: Please save it` → `Check: Reopen the app and see whether the list is still there`
+
+These four areas are not types of people. All four can be present in the same person's idea. **Once a missing question is found, decide on an answer and check the result in the working app.**
+
 ## Differences between editions
 
 | | Claude Code edition | Codex edition | Copilot CLI edition |
