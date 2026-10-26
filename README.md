@@ -4,6 +4,8 @@
 >
 > The Korean version is available at [hyun-yang/automix-light](https://github.com/hyun-yang/automix-light).
 
+After installing AML, start with the **[beginner-friendly visual guide](manual/automix-light-manual-en.html)**. It explains planning with `new`, building with `go`, and KK, UK, KU, and UU through one example. Open the HTML file in your browser; on GitHub, download it first. The guide works offline.
+
 Based on Anthropic's [AI-Native SDLC playbook](https://claude.com/blog/the-ai-native-sdlc-playbook), **with the development process simplified so someone building an app alone can follow it.** The core idea is to write down the result of each step as a document, and to work from that document in the next step.
 
 You shape the idea, plan the build, build the app, and check it. Problems and wanted features you find while using the finished app go into the next round of work.
@@ -202,6 +204,7 @@ These four areas are not types of people. All four can be present in the same pe
 
 ```text
 README.md                           this document — pick a tool
+manual/automix-light-manual-en.html  beginner-friendly visual guide after installation
 claude-code/                        Claude Code edition
   .claude-plugin/marketplace.json   marketplace settings
   aml/                              plugin (commands · agents · hooks · scripts · templates · references)
